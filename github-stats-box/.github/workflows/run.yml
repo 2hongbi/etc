@@ -1,0 +1,22 @@
+name: Update Github Stats Gist
+on:
+    workflow_dispatch:
+    schedule:
+        - cron: '0 */12 * * *'
+    push:
+        branches: master
+jobs:
+    run:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/setup-node@v1
+              with:
+                  node-version: 12
+            - run: npx github-stats-box
+              env:
+                  GH_TOKEN: ${{ secrets.GH_TOKEN }} # Do not edit, defined in secrets
+
+                  # Edit the following environment variables
+                  GIST_ID: 765f846321638d5abac9589df05d3970 # The ID portion from your gist url
+                  ALL_COMMITS: true # If `true` it will count all commits, if `false` it will count your last year commits
+                  K_FORMAT: false # If `true`, large numbers will be formatted with a "k", for example "1.5k"
